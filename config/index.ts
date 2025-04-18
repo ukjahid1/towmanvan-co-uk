@@ -4,7 +4,7 @@ export const config = {
 	// Internationalization
 	i18n: {
 		// Whether internationalization should be enabled (if disabled, you still need to define the locale you want to use below and set it as the default locale)
-		enabled: true,
+		enabled: false,
 		// Define all locales here that should be available in the app
 		// You need to define a label that is shown in the language selector and a currency that should be used for pricing with this locale
 		locales: {
@@ -27,7 +27,7 @@ export const config = {
 	// Organizations
 	organizations: {
 		// Whether organizations are enabled in general
-		enable: true,
+		enable: false,
 		// Whether billing for organizations should be enabled (below you can enable it for users instead)
 		enableBilling: true,
 		// Whether the organization should be hidden from the user (use this for multi-tenant applications)
@@ -84,7 +84,7 @@ export const config = {
 		// the saas part of the application
 		saas: {
 			// whether the saas part should be enabled (otherwise all routes will be redirect to the marketing page)
-			enabled: true,
+			enabled: false,
 			// whether the sidebar layout should be used
 			useSidebarLayout: true,
 		},

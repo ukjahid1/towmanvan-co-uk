@@ -58,10 +58,10 @@
 	:root {
 		--border: #e3ebf6;
 		--input: #c7ced8;
-		--ring: #4e6df5;
+		--ring: #10141a;
 		--background: #fafafe;
 		--foreground: #292b35;
-		--primary: #4e6df5;
+		--primary: #10141a;
 		--primary-foreground: #f6f7f9;
 		--secondary: #292b35;
 		--secondary-foreground: #ffffff;
@@ -88,10 +88,10 @@
 	.dark {
 		--border: #2b303d;
 		--input: #4c5362;
-		--ring: #5581f7;
+		--ring: #ffffff;
 		--background: #070d12;
 		--foreground: #e9eef3;
-		--primary: #5581f7;
+		--primary: #ffffff;
 		--primary-foreground: #091521;
 		--secondary: #e9eef3;
 		--secondary-foreground: #091521;
@@ -109,14 +109,6 @@
 		--card-foreground: #e9eef3;
 		--highlight: #e5a158;
 		--highlight-foreground: #ffffff;
-	}
-
-	*,
-	::after,
-	::before,
-	::backdrop,
-	::file-selector-button {
-		@apply border-border;
 	}
 }
 
