@@ -1,3 +1,4 @@
+import FaqCard from "@marketing/home/components/FaqCard";
 import { cn } from "@ui/lib";
 import { useTranslations } from "next-intl";
 
@@ -39,18 +40,23 @@ export function FaqSection({ className }: { className?: string }) {
 					</h1>
 					<p className="text-lg opacity-50">{t("faq.description")}</p>
 				</div>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-					{items.map((item, i) => (
-						<div
-							key={`faq-item-${i}`}
-							className="rounded-lg border p-4 lg:p-6"
-						>
-							<h4 className="mb-2 font-semibold text-lg">
-								{item.question}
-							</h4>
-							<p className="text-foreground/60">{item.answer}</p>
-						</div>
-					))}
+				<div className="space-y-4 max-w-4xl mx-auto">
+					{items.map((item, index) =>
+						index === 0 ? (
+							<FaqCard
+								key={`faq-item${index}`}
+								question={item.question}
+								answer={item.answer}
+								isOpenByDefault={true}
+							/>
+						) : (
+							<FaqCard
+								key={`faq-item${index}`}
+								question={item.question}
+								answer={item.answer}
+							/>
+						),
+					)}
 				</div>
 			</div>
 		</section>
