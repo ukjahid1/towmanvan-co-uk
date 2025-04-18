@@ -14,20 +14,23 @@ export function Footer() {
 				</div>
 
 				<div className="flex flex-col gap-2">
+					<LocaleLink href="/services" className="block">
+						Services
+					</LocaleLink>
+
 					<LocaleLink href="/blog" className="block">
 						Blog
 					</LocaleLink>
 
-					<a href="#features" className="block">
-						Features
-					</a>
-
-					<a href="/#pricing" className="block">
-						Pricing
+					<a href="/#faq" className="block">
+						FAQ
 					</a>
 				</div>
 
 				<div className="flex flex-col gap-2">
+					<LocaleLink href="/agent" className="block underline">
+						Become an Agent
+					</LocaleLink>
 					<LocaleLink href="/legal/privacy-policy" className="block">
 						Privacy policy
 					</LocaleLink>
