@@ -6,7 +6,7 @@ import { useSession } from "@saas/auth/hooks/use-session";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";
 import { Logo } from "@shared/components/Logo";
-import { Button } from "@ui/components/button";
+import { Button, buttonVariants } from "@ui/components/button";
 import {
 	Sheet,
 	SheetContent,
@@ -51,25 +51,37 @@ export function NavBar() {
 
 	const isDocsPage = localePathname.startsWith("/docs");
 
+	const getApp: {
+		label: string;
+		href: string;
+	} = {
+		label: t("common.menu.get-app"),
+		href: "/get-app",
+	};
+
 	const menuItems: {
 		label: string;
 		href: string;
 	}[] = [
 		{
-			label: t("common.menu.pricing"),
-			href: "/#pricing",
+			label: t("common.menu.home"),
+			href: "/",
 		},
 		{
-			label: t("common.menu.faq"),
-			href: "/#faq",
+			label: t("common.menu.services"),
+			href: "/services",
+		},
+		{
+			label: t("common.menu.agent"),
+			href: "/agent",
 		},
 		{
 			label: t("common.menu.blog"),
 			href: "/blog",
 		},
 		{
-			label: t("common.menu.changelog"),
-			href: "/changelog",
+			label: t("common.menu.faq"),
+			href: "/#faq",
 		},
 		...(config.contactForm.enabled
 			? [
@@ -79,10 +91,10 @@ export function NavBar() {
 					},
 				]
 			: []),
-		{
-			label: t("common.menu.docs"),
-			href: "/docs",
-		},
+		// {
+		// 	label: t("common.menu.docs"),
+		// 	href: "/docs",
+		// },
 	];
 
 	const isMenuItemActive = (href: string) => localePathname.startsWith(href);
@@ -113,16 +125,17 @@ export function NavBar() {
 						</LocaleLink>
 					</div>
 
-					<div className="hidden flex-1 items-center justify-center lg:flex">
+					<div className="hidden flex-1 items-center justify-center lg:flex gap-2">
 						{menuItems.map((menuItem) => (
 							<LocaleLink
 								key={menuItem.href}
 								href={menuItem.href}
 								className={cn(
-									"block px-3 py-2 font-medium text-foreground/80 text-sm",
+									buttonVariants({ variant: "outline" }),
 									isMenuItemActive(menuItem.href)
-										? "font-bold text-foreground"
+										? buttonVariants({ variant: "default" })
 										: "",
+									"rounded-full",
 								)}
 							>
 								{menuItem.label}
@@ -131,6 +144,19 @@ export function NavBar() {
 					</div>
 
 					<div className="flex flex-1 items-center justify-end gap-3">
+						<LocaleLink
+							key={getApp.href}
+							href={getApp.href}
+							className={cn(
+								buttonVariants({ variant: "default" }),
+								// isMenuItemActive(getApp.href)
+								// 	? buttonVariants({ variant: "default" })
+								// 	: "",
+								"rounded-full text-nowrap",
+							)}
+						>
+							{getApp.label}
+						</LocaleLink>
 						<ColorModeToggle />
 						{config.i18n.enabled && (
 							<Suspense>
@@ -170,7 +196,7 @@ export function NavBar() {
 										</LocaleLink>
 									))}
 
-									<NextLink
+									{/* <NextLink
 										key={user ? "start" : "login"}
 										href={user ? "/app" : "/auth/login"}
 										className="block px-3 py-2 text-base"
@@ -179,7 +205,7 @@ export function NavBar() {
 										{user
 											? t("common.menu.dashboard")
 											: t("common.menu.login")}
-									</NextLink>
+									</NextLink> */}
 								</div>
 							</SheetContent>
 						</Sheet>

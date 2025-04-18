@@ -58,9 +58,9 @@ export const config = {
 		// Whether users should be able to sign in with a magic link
 		enableMagicLink: true,
 		// Whether users should be able to sign in with a social provider
-		enableSocialLogin: true,
+		enableSocialLogin: false,
 		// Whether users should be able to sign in with a passkey
-		enablePasskeys: true,
+		enablePasskeys: false,
 		// Whether users should be able to sign in with a password
 		enablePasswordLogin: true,
 		// where users should be redirected after the sign in
@@ -103,7 +103,7 @@ export const config = {
 	},
 	contactForm: {
 		// whether the contact form should be enabled
-		enabled: true,
+		enabled: false,
 		// the email to which the contact form messages should be sent
 		to: "hello@your-domain.com",
 		// the subject of the email

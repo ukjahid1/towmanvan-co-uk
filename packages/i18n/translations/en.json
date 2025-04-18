@@ -193,13 +193,15 @@
 		},
 		"menu": {
 			"blog": "Blog",
-			"changelog": "Changelog",
+			"agent": "Agent",
+			"services": "Services",
 			"contact": "Contact",
 			"dashboard": "Dashboard",
 			"docs": "Docs",
 			"faq": "FAQ",
 			"login": "Login",
-			"pricing": "Pricing"
+			"get-app": "Get the App",
+			"home": "Home"
 		},
 		"tableOfContents": {
 			"title": "On this page"
