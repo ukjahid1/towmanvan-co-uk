@@ -58,7 +58,7 @@ export const recoveryFormSchema = z
 			})
 			.optional(),
 
-		recoveryDateTime: z.preprocess(
+		preferredDateTime: z.preprocess(
 			(val) => (typeof val === "string" ? new Date(val) : val),
 			z.date(),
 		),
@@ -106,7 +106,7 @@ export default function RecoveryForm() {
 			vehicleDescription: "",
 			pickupLocation: undefined,
 			dropoffLocation: undefined,
-			recoveryDateTime: new Date(),
+			preferredDateTime: new Date(),
 		},
 	});
 
@@ -348,7 +348,7 @@ export default function RecoveryForm() {
 				<div className="flex w-full gap-4">
 					<FormField
 						control={form.control}
-						name="recoveryDateTime"
+						name="preferredDateTime"
 						render={({ field }) => (
 							<FormItem className="flex flex-col w-full">
 								<FormLabel>Preferred Date</FormLabel>
@@ -417,7 +417,7 @@ export default function RecoveryForm() {
 					/>
 					<FormField
 						control={form.control}
-						name="recoveryDateTime"
+						name="preferredDateTime"
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel>Time</FormLabel>
