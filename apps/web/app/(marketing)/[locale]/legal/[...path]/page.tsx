@@ -12,9 +12,7 @@ type Params = {
 	locale: string;
 };
 
-export async function generateMetadata(props: {
-	params: Promise<Params>;
-}) {
+export async function generateMetadata(props: { params: Promise<Params> }) {
 	const params = await props.params;
 
 	const { path } = params;
@@ -35,9 +33,7 @@ export async function generateMetadata(props: {
 	};
 }
 
-export default async function BlogPostPage(props: {
-	params: Promise<Params>;
-}) {
+export default async function BlogPostPage(props: { params: Promise<Params> }) {
 	const params = await props.params;
 
 	const { path } = params;
@@ -57,7 +53,7 @@ export default async function BlogPostPage(props: {
 	const { title, body } = page;
 
 	return (
-		<div className="container max-w-6xl pt-32 pb-24">
+		<div className="container max-w-7xl pt-32 pb-24">
 			<div className="mx-auto mb-12 max-w-2xl">
 				<h1 className="text-center font-bold text-4xl">{title}</h1>
 			</div>

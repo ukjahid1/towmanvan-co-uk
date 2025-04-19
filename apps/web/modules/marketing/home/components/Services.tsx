@@ -54,7 +54,7 @@ export const Services = () => {
 	];
 	return (
 		<section className="w-full scroll-my-20 pt-12 pb-4 lg:pt-16 bg-background">
-			<div className="container max-w-6xl px-2 mx-auto">
+			<div className="container max-w-7xl px-2 mx-auto">
 				<h4 className="text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
 					Services
 				</h4>

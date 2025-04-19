@@ -174,7 +174,7 @@ export function Hero() {
 					/>
 				</div>
 			</div> */}
-			<div className="w-full bg-background/50 pt-36 pb-12 max-w-6xl mx-auto">
+			<div className="w-full bg-background/50 pt-36 pb-12 max-w-7xl mx-auto">
 				<div className="w-full grid grid-cols-12 gap-4">
 					<div className="col-span-12 md:col-span-5 lg:col-span-4 bg-hero-bg bg-cover lg:rounded-xl my-auto">
 						{/* <InstantQuoteForm isLabelHidden={true} /> */}

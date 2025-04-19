@@ -10,7 +10,7 @@ export function SettingsList({ children }: PropsWithChildren) {
 								{i > 0 && (
 									<hr
 										key={`divider-${i}`}
-										className="@xl:my-8 my-6"
+										className="@xl:my-16 my-6"
 									/>
 								)}
 								{child}

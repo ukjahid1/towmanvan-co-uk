@@ -5,7 +5,7 @@ export function Footer() {
 	return (
 		<footer
 			className={cn(
-				"container max-w-6xl py-6 text-center text-foreground/60 text-xs",
+				"container max-w-7xl py-6 text-center text-foreground/60 text-xs",
 			)}
 		>
 			<span>

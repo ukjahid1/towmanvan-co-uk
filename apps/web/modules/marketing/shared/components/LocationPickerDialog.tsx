@@ -49,7 +49,7 @@ export const LocationPickerDialog = ({ label, value, onChange }: Props) => {
 			<DialogTrigger asChild className="w-full text-start">
 				<Button
 					variant="ghost"
-					className="h-auto w-full bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-3 shadow-none border-none focus:ring-2 focus:ring-fd-primary focus:outline-none"
+					className="h-auto w-full bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-3 shadow-none border-none focus:ring-2 focus:ring-fd-primary focus:outline-none"
 				>
 					{placeName ||
 						(value

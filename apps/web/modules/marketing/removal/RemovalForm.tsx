@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRecoveryFormMutation } from "@marketing/home/lib/api";
+import { useRemovalFormMutation } from "@marketing/removal/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import { DateTimeInput } from "@ui/components/datetime-input";
@@ -15,7 +15,7 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
-// import {} from "@ui/components/popover";
+import {} from "@ui/components/popover";
 import {
 	Select,
 	SelectContent,
@@ -24,112 +24,90 @@ import {
 	SelectValue,
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
-import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
-import { useWatch } from "react-hook-form";
+
 import { toast } from "sonner";
 import { z } from "zod";
 
-export const recoveryFormSchema = z
-	.object({
-		fullName: z.string().min(1, "Full name is required"),
-		email: z.string().email("Invalid email"),
-		mobile: z.string().min(10, "Invalid phone number"),
-		vehicleDescription: z.string().optional(),
+export const removalFormSchema = z.object({
+	fullName: z.string().min(1, "Full name is required"),
+	email: z.string().email("Invalid email"),
+	contactNumber: z.string().min(10, "Invalid phone number"),
+	itamsDescription: z.string().min(1, "Description is required"),
 
-		pickupLocation: z.object({
-			lat: z.number(),
-			lng: z.number(),
-		}),
+	pickupLocation: z.object({
+		lat: z.number(),
+		lng: z.number(),
+	}),
 
-		dropoffLocation: z
-			.object({
-				lat: z.number(),
-				lng: z.number(),
-			})
-			.optional(),
+	dropoffLocation: z.object({
+		lat: z.number(),
+		lng: z.number(),
+	}),
 
-		recoveryDateTime: z.preprocess(
-			(val) => (typeof val === "string" ? new Date(val) : val),
-			z.date(),
-		),
+	preferredDateTime: z.preprocess(
+		(val) => (typeof val === "string" ? new Date(val) : val),
+		z.date(),
+	),
 
-		recoveryType: z.enum(
-			[
-				"ACCIDENT",
-				"A_TO_B_TRANSPORTATION",
-				"EMERGENCY_BREAKDOWN",
-				"FLAT_TIRE",
-				"JUMP_START",
-				"OTHERS",
-			],
-			{ required_error: "Please select one" },
-		),
+	assistance: z.enum(["NONE", "DRIVER", "DRIVER_PLUS_ONE"], {
+		required_error: "Please select one",
+	}),
 
-		vehicleCondition: z.enum(["WHEEL_ROLLER", "NON_ROLLER"], {
-			required_error: "Please select one",
-		}),
-	})
-	.refine(
-		(data) =>
-			data.recoveryType === "JUMP_START" ||
-			data.dropoffLocation !== undefined,
-		{
-			message: "Drop-off location is required for this recovery type.",
-			path: ["dropoffLocation"], // where the error will appear
-		},
-	);
+	vehicleSize: z.enum(
+		[
+			"SMALL_VAN",
+			"MEDIUM_VAN",
+			"LONG_WHEELBASE_VAN",
+			"LUTON_VAN",
+			"NOT_SURE",
+		],
+		{ required_error: "Please select one" },
+	),
+});
 
-type RecoveryFormValues = z.infer<typeof recoveryFormSchema>;
+const removalSchema = removalFormSchema;
 
-export default function RecoveryForm() {
-	const form = useForm<RecoveryFormValues>({
-		resolver: zodResolver(recoveryFormSchema),
+type RemovalFormValues = z.infer<typeof removalSchema>;
+
+export default function RemovalForm() {
+	const form = useForm<RemovalFormValues>({
+		resolver: zodResolver(removalSchema),
 		defaultValues: {
 			fullName: "",
 			email: "",
-			mobile: "",
-			vehicleDescription: "",
+			contactNumber: "",
+			itamsDescription: "",
 			pickupLocation: undefined,
 			dropoffLocation: undefined,
-			recoveryDateTime: new Date(),
+			preferredDateTime: new Date(),
 		},
 	});
 
-	const { mutate, isPending } = useRecoveryFormMutation();
+	const { mutate, isPending } = useRemovalFormMutation();
 
-	const onSubmit = (data: RecoveryFormValues) => {
+	const onSubmit = (data: RemovalFormValues) => {
 		console.log(data);
 		console.log(JSON.stringify(data, null, 2));
 
 		mutate(data, {
 			onSuccess: () => {
-				toast.success("Recovery quote submitted!");
+				toast.success("Removal request submitted!");
 				form.reset(); // reset form on success
 			},
 			onError: () => {
-				toast.error("Failed to submit recovery quote");
-				// console.error("Recovery quote error:", error);
+				toast.error("Failed to submit removal request");
+				// console.error("Removal quote error:", error);
 			},
 		});
 	};
-
-	const recoveryType = useWatch({
-		control: form.control,
-		name: "recoveryType",
-	});
-
-	useEffect(() => {
-		if (recoveryType === "JUMP_START") {
-			form.setValue("dropoffLocation", { lat: 0, lng: 0 }); // or `null` if supported
-		}
-	}, [recoveryType, form]);
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="space-y-4 max-w-xl mx-auto bg-primary/10 p-6 rounded-2xl shadow-md"
+				className="space-y-4 max-w-xl mx-auto"
 			>
 				{/* Full Name */}
 				<FormField
@@ -139,7 +117,7 @@ export default function RecoveryForm() {
 						<FormItem>
 							<FormControl>
 								<Input
-									className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
+									className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
 									placeholder="Full Name"
 									{...field}
 								/>
@@ -157,7 +135,7 @@ export default function RecoveryForm() {
 						<FormItem>
 							<FormControl>
 								<Input
-									className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
+									className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
 									placeholder="Email"
 									type="Email"
 									{...field}
@@ -168,15 +146,15 @@ export default function RecoveryForm() {
 					)}
 				/>
 
-				{/* Mobile */}
+				{/* ContaccontactNumber */}
 				<FormField
 					control={form.control}
-					name="mobile"
+					name="contactNumber"
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
 								<Input
-									className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
+									className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
 									placeholder="Phone Number"
 									type="tel"
 									{...field}
@@ -187,10 +165,10 @@ export default function RecoveryForm() {
 					)}
 				/>
 
-				{/* Recovery Type */}
+				{/* Vehicle Size */}
 				<FormField
 					control={form.control}
-					name="recoveryType"
+					name="vehicleSize"
 					render={({ field }) => (
 						<FormItem>
 							<Select
@@ -198,30 +176,29 @@ export default function RecoveryForm() {
 								defaultValue={field.value}
 							>
 								<FormControl>
-									<SelectTrigger className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none">
-										<SelectValue placeholder="Select Recovery Type" />
+									<SelectTrigger className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none">
+										<SelectValue placeholder="Select Vehicle Size" />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
 									{[
-										{ key: "Accident", value: "ACCIDENT" },
 										{
-											key: "A to B Transportation",
-											value: "A_TO_B_TRANSPORTATION",
+											key: "Small Van",
+											value: "SMALL_VAN",
 										},
 										{
-											key: "Emergency Breakdown",
-											value: "EMERGENCY_BREAKDOWN",
+											key: "Medium Van",
+											value: "MEDIUM_VAN",
 										},
 										{
-											key: "Flat Tyre",
-											value: "FLAT_TYRE",
+											key: "Long Wheelbase van",
+											value: "LONG_WHEELBASE_VAN",
 										},
 										{
-											key: "Jump Start",
-											value: "JUMP_START",
+											key: "Luton Van",
+											value: "LUTON_VAN",
 										},
-										{ key: "Others", value: "OTHERS" },
+										{ key: "Not Sure", value: "NOT_SURE" },
 									].map((element) => (
 										<SelectItem
 											key={element.key}
@@ -237,10 +214,10 @@ export default function RecoveryForm() {
 					)}
 				/>
 
-				{/* Vehicle Condition */}
+				{/* Assistance Type */}
 				<FormField
 					control={form.control}
-					name="vehicleCondition"
+					name="assistance"
 					render={({ field }) => (
 						<FormItem>
 							<Select
@@ -248,17 +225,26 @@ export default function RecoveryForm() {
 								defaultValue={field.value}
 							>
 								<FormControl>
-									<SelectTrigger className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none">
-										<SelectValue placeholder="Select Vehicle Condition" />
+									<SelectTrigger className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none">
+										<SelectValue placeholder="Select Required Assistance" />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									<SelectItem value="WHEEL_ROLLER">
-										Wheel Roller
-									</SelectItem>
-									<SelectItem value="NON_ROLLER">
-										Non-roller
-									</SelectItem>
+									{[
+										{ key: "None", value: "NONE" },
+										{ key: "Driver", value: "DRIVER" },
+										{
+											key: "Driver + One",
+											value: "DRIVER_PLUS_ONE",
+										},
+									].map((element) => (
+										<SelectItem
+											key={element.key}
+											value={element.value}
+										>
+											{element.key}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 							<FormMessage />
@@ -266,16 +252,16 @@ export default function RecoveryForm() {
 					)}
 				/>
 
-				{/* Vehicle Description */}
+				{/* Items Description */}
 				<FormField
 					control={form.control}
-					name="vehicleDescription"
+					name="itamsDescription"
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
 								<Textarea
-									className="bg-background text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
-									placeholder="Your Vehicle Description (Make, Model, Year, etc.)"
+									className="bg-primary/10 text-muted-foreground placeholder-fd-muted-foreground rounded-xl px-4 py-6 shadow-none border-none focus:ring-2 focus:ring-primary focus:outline-none "
+									placeholder="Your Items Description (What are you moving?)"
 									rows={3}
 									{...field}
 								/>
@@ -304,29 +290,28 @@ export default function RecoveryForm() {
 				/>
 
 				{/* Drop-off Location */}
-				{recoveryType !== "JUMP_START" && (
-					<FormField
-						control={form.control}
-						name="dropoffLocation"
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<LocationPickerDialog
-										value={field.value ?? null}
-										onChange={field.onChange}
-										label="Select Drop-off Location"
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-				)}
 
-				{/* Recovery Date and Time */}
 				<FormField
 					control={form.control}
-					name="recoveryDateTime"
+					name="dropoffLocation"
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<LocationPickerDialog
+									value={field.value}
+									onChange={field.onChange}
+									label="Select Drop-off Location"
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				{/* Removal Date and Time */}
+				<FormField
+					control={form.control}
+					name="preferredDateTime"
 					render={({ field }) => (
 						<FormItem className="flex flex-col ">
 							<FormLabel className="text-start">
@@ -369,7 +354,7 @@ export default function RecoveryForm() {
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
 					disabled={isPending}
 				>
-					{isPending ? "Submitting..." : "Request Instant Quote"}
+					{isPending ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>

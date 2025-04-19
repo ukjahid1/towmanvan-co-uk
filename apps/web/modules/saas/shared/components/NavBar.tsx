@@ -82,8 +82,8 @@ export function NavBar() {
 			})}
 		>
 			<div
-				className={cn("container max-w-6xl py-4", {
-					"container max-w-6xl py-4 md:flex md:h-full md:flex-col md:px-6 md:pt-6 md:pb-0":
+				className={cn("container max-w-7xl py-4", {
+					"container max-w-7xl py-4 md:flex md:h-full md:flex-col md:px-6 md:pt-6 md:pb-0":
 						useSidebarLayout,
 				})}
 			>
