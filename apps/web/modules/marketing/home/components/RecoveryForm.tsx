@@ -4,8 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRecoveryFormMutation } from "@marketing/home/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
-import { DateTimeInput } from "@ui/components/datetime-input";
-import { DateTimePicker } from "@ui/components/datetime-picker";
+import { Calendar } from "@ui/components/calendar";
 import {
 	Form,
 	FormControl,
@@ -15,6 +14,12 @@ import {
 	FormMessage,
 } from "@ui/components/form";
 import { Input } from "@ui/components/input";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@ui/components/popover";
+import { ScrollArea } from "@ui/components/scroll-area";
 // import {} from "@ui/components/popover";
 import {
 	Select,
@@ -24,6 +29,10 @@ import {
 	SelectValue,
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
+import { cn } from "@ui/lib";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWatch } from "react-hook-form";
@@ -83,6 +92,10 @@ export const recoveryFormSchema = z
 type RecoveryFormValues = z.infer<typeof recoveryFormSchema>;
 
 export default function RecoveryForm() {
+	const [isOpen, setIsOpen] = useState(false);
+	const [time, setTime] = useState<string>("05:00");
+	const [date, setDate] = useState<Date | null>(null);
+
 	const form = useForm<RecoveryFormValues>({
 		resolver: zodResolver(recoveryFormSchema),
 		defaultValues: {
@@ -324,43 +337,142 @@ export default function RecoveryForm() {
 				)}
 
 				{/* Recovery Date and Time */}
-				<FormField
-					control={form.control}
-					name="recoveryDateTime"
-					render={({ field }) => (
-						<FormItem className="flex flex-col ">
-							<FormLabel className="text-start">
-								Prefferd Date & Time
-							</FormLabel>
-							<FormControl>
-								<DateTimePicker
-									value={field.value}
-									onChange={field.onChange}
-									use12HourFormat
-									timePicker={{ hour: true, minute: true }}
-									renderTrigger={({
-										open,
-										value,
-										setOpen,
-									}) => (
-										<DateTimeInput
-											value={value}
-											onChange={(x) =>
-												!open && field.onChange(x)
+				<div className="flex w-full gap-4">
+					<FormField
+						control={form.control}
+						name="recoveryDateTime"
+						render={({ field }) => (
+							<FormItem className="flex flex-col w-full">
+								<FormLabel>Preferred Date</FormLabel>
+								<Popover open={isOpen} onOpenChange={setIsOpen}>
+									<PopoverTrigger asChild>
+										<FormControl>
+											<Button
+												variant={"outline"}
+												className={cn(
+													"w-full font-normal",
+													!field.value &&
+														"text-muted-foreground",
+												)}
+											>
+												{field.value ? (
+													`${format(field.value, "PPP")}, ${time}`
+												) : (
+													<span>Pick a date</span>
+												)}
+												<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+											</Button>
+										</FormControl>
+									</PopoverTrigger>
+									<PopoverContent
+										className="w-auto p-0"
+										align="start"
+									>
+										<Calendar
+											mode="single"
+											captionLayout="dropdown"
+											selected={date || field.value}
+											onSelect={(selectedDate) => {
+												const [hours, minutes] =
+													time?.split(":") || [];
+												selectedDate?.setHours(
+													Number.parseInt(hours),
+													Number.parseInt(minutes),
+												);
+												// biome-ignore lint/style/noNonNullAssertion: <explanation>
+												setDate(selectedDate!);
+												field.onChange(selectedDate);
+											}}
+											onDayClick={() => setIsOpen(false)}
+											fromYear={new Date().getFullYear()}
+											toYear={
+												new Date().getFullYear() + 5
 											}
-											format="dd/MM/yyyy hh:mm aa"
-											disabled={open}
-											onCalendarClick={() =>
-												setOpen(!open)
+											disabled={(date) =>
+												Number(date) <
+													Date.now() -
+														1000 * 60 * 60 * 24 ||
+												Number(date) >
+													Date.now() +
+														1000 * 60 * 60 * 24 * 30
 											}
+											defaultMonth={field.value}
 										/>
-									)}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+									</PopoverContent>
+								</Popover>
+								{/* <FormDescription>
+									Set your date and time.
+								</FormDescription> */}
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="recoveryDateTime"
+						render={({ field }) => (
+							<FormItem className="flex flex-col">
+								<FormLabel>Time</FormLabel>
+								<FormControl>
+									<Select
+										defaultValue={time || "00:00"}
+										onValueChange={(e) => {
+											setTime(e);
+											if (date) {
+												const [hours, minutes] =
+													e.split(":");
+												const newDate = new Date(
+													date.getTime(),
+												);
+												newDate.setHours(
+													Number.parseInt(hours),
+													Number.parseInt(minutes),
+												);
+												setDate(newDate);
+												field.onChange(newDate);
+											}
+										}}
+									>
+										<SelectTrigger className="font-normal focus:ring-0 w-[120px] focus:ring-offset-0">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent
+											position="popper"
+											align="center"
+										>
+											<ScrollArea className="h-40">
+												{Array.from({
+													length: 96,
+												}).map((_, i) => {
+													const hour = Math.floor(
+														i / 4,
+													)
+														.toString()
+														.padStart(2, "0");
+													const minute = (
+														(i % 4) *
+														15
+													)
+														.toString()
+														.padStart(2, "0");
+													return (
+														<SelectItem
+															key={i}
+															value={`${hour}:${minute}`}
+														>
+															{hour}:{minute}
+														</SelectItem>
+													);
+												})}
+											</ScrollArea>
+										</SelectContent>
+									</Select>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
 
 				{/* Submit Button */}
 				<Button
