@@ -132,9 +132,6 @@ export default function RecoveryForm() {
 	};
 
 	const onSubmit = (data: RecoveryFormValues) => {
-		console.log(data);
-		console.log(JSON.stringify(data, null, 2));
-
 		postRecoveryQuote(data);
 	};
 

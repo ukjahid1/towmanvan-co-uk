@@ -113,8 +113,7 @@ export default function HandymanForm() {
 	};
 
 	const onSubmit = (data: HandymanFormValues) => {
-		console.log(data);
-		console.log(JSON.stringify(data, null, 2));
+		postHandymanRequest(data);
 	};
 
 	return (

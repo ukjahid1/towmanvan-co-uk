@@ -120,8 +120,7 @@ export default function RemovalForm() {
 	};
 
 	const onSubmit = (data: RemovalFormValues) => {
-		console.log(data);
-		console.log(JSON.stringify(data, null, 2));
+		postRemovalData(data);
 	};
 
 	return (

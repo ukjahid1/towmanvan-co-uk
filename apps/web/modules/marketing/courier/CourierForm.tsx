@@ -109,9 +109,6 @@ export default function CourierForm() {
 	};
 
 	const onSubmit = (data: CourierFormValues) => {
-		console.log(data);
-		console.log(JSON.stringify(data, null, 2));
-
 		postCourierRequest(data);
 	};
 

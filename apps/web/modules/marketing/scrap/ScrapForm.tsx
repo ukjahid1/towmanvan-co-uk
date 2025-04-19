@@ -114,8 +114,7 @@ export default function ScrapForm() {
 	};
 
 	const onSubmit = (data: ScrapFormValues) => {
-		console.log(data);
-		console.log(JSON.stringify(data, null, 2));
+		postScrapRequest(data);
 	};
 
 	return (
