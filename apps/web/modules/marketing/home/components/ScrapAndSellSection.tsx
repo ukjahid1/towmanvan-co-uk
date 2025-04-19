@@ -1,4 +1,4 @@
-import ScrapForm from "@marketing/scrap/ScrapSellForm";
+import ScrapForm from "@marketing/scrap/ScrapForm";
 import React from "react";
 
 export const ScrapAndSellSection = () => {

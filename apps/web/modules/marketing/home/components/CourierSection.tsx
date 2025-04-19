@@ -1,4 +1,4 @@
-import CourierForm from "@marketing/courier/CourierRequestForm";
+import CourierForm from "@marketing/courier/CourierForm";
 
 import React from "react";
 
