@@ -114,7 +114,7 @@ export default function RecoveryForm() {
 		try {
 			setIsLoading(true);
 			const response = await axios.post(
-				`${process.env.NEXT_PUBLIC_API_URL}/quote`,
+				`${process.env.NEXT_PUBLIC_API_URL ?? "https://www.towmanvan.com/api"}/quote`,
 				data,
 			);
 			if (response.status === 200) {
