@@ -13,7 +13,6 @@ export function Hero() {
 			id="car-recovery"
 			className="relative max-w-full overflow-x-hidden bg-linear-to-b from-0% from-card to-[50vh] to-background"
 		>
-			<div className="absolute left-1/2 z-10 ml-[-500px] h-[500px] w-[1000px] rounded-full bg-linear-to-r from-primary to-bg opacity-20 blur-[150px]" />
 			{/* <div className="container relative z-20 pt-44 pb-12 text-center lg:pb-16">
 				<div className="mb-4 flex justify-center">
 					<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 bg-card p-px px-4 py-1 font-normal text-highlight text-sm shadow-sm">
