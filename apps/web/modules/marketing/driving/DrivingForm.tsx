@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDrivingRequestMutation } from "@marketing/driving/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import { Calendar } from "@ui/components/calendar";
@@ -30,6 +29,7 @@ import {
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
+import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -66,7 +66,7 @@ export default function DrivingForm() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [time, setTime] = useState<string>("05:00");
 	const [date, setDate] = useState<Date | null>(null);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const form = useForm<DrivingFormValues>({
 		resolver: zodResolver(drivingSchema),
 		defaultValues: {
@@ -79,19 +79,29 @@ export default function DrivingForm() {
 		},
 	});
 
-	const { mutate, isPending } = useDrivingRequestMutation();
-
-	const onSubmit = (data: DrivingFormValues) => {
-		mutate(data, {
-			onSuccess: () => {
+	const postDrivingRequest = async (data: DrivingFormValues) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/driving`,
+				data,
+			);
+			if (response.status === 200) {
 				toast.success("Driving quote submitted!");
 				form.reset(); // reset form on success
-			},
-			onError: () => {
+			} else {
 				toast.error("Failed to submit driving quote");
-				// console.error("Driving quote error:", error);
-			},
-		});
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			toast.error("Failed to submit driving quote");
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const onSubmit = (data: DrivingFormValues) => {
+		postDrivingRequest(data);
 	};
 
 	return (
@@ -409,9 +419,9 @@ export default function DrivingForm() {
 					type="submit"
 					variant="default"
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
-					disabled={isPending}
+					disabled={isLoading}
 				>
-					{isPending ? "Submitting..." : "Submit"}
+					{isLoading ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>

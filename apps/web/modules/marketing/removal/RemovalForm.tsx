@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRemovalFormMutation } from "@marketing/removal/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import { Calendar } from "@ui/components/calendar";
@@ -30,6 +29,7 @@ import {
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
+import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -84,7 +84,7 @@ export default function RemovalForm() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [time, setTime] = useState<string>("05:00");
 	const [date, setDate] = useState<Date | null>(null);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const form = useForm<RemovalFormValues>({
 		resolver: zodResolver(removalSchema),
 		defaultValues: {
@@ -98,22 +98,30 @@ export default function RemovalForm() {
 		},
 	});
 
-	const { mutate, isPending } = useRemovalFormMutation();
+	const postRemovalData = async (data: RemovalFormValues) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/removal`,
+				data,
+			);
+			if (response.status === 200) {
+				toast.success("Man and van / removal quote submitted!");
+				form.reset(); // reset form on success
+			} else {
+				toast.error("Failed to submit man and van / removal quote");
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			toast.error("Failed to submit man and van / removal quote");
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const onSubmit = (data: RemovalFormValues) => {
 		console.log(data);
 		console.log(JSON.stringify(data, null, 2));
-
-		mutate(data, {
-			onSuccess: () => {
-				toast.success("Removal request submitted!");
-				form.reset(); // reset form on success
-			},
-			onError: () => {
-				toast.error("Failed to submit removal request");
-				// console.error("Removal quote error:", error);
-			},
-		});
 	};
 
 	return (
@@ -455,9 +463,9 @@ export default function RemovalForm() {
 					type="submit"
 					variant="default"
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
-					disabled={isPending}
+					disabled={isLoading}
 				>
-					{isPending ? "Submitting..." : "Submit"}
+					{isLoading ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>

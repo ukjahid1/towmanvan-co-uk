@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useScrapRequestMutation } from "@marketing/scrap/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import { Calendar } from "@ui/components/calendar";
@@ -30,6 +29,7 @@ import {
 } from "@ui/components/select";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
+import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
@@ -74,7 +74,7 @@ export default function ScrapForm() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [time, setTime] = useState<string>("05:00");
 	const [date, setDate] = useState<Date | null>(null);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const form = useForm<ScrapFormValues>({
 		resolver: zodResolver(scrapSchema),
 		defaultValues: {
@@ -92,22 +92,30 @@ export default function ScrapForm() {
 		},
 	});
 
-	const { mutate, isPending } = useScrapRequestMutation();
+	const postScrapRequest = async (data: ScrapFormValues) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/scrap`,
+				data,
+			);
+			if (response.status === 200) {
+				toast.success("Scrap and sell quote submitted!");
+				form.reset(); // reset form on success
+			} else {
+				toast.error("Failed to submit scrap and sell quote");
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			toast.error("Failed to submit scrap and sell quote");
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const onSubmit = (data: ScrapFormValues) => {
 		console.log(data);
 		console.log(JSON.stringify(data, null, 2));
-
-		mutate(data, {
-			onSuccess: () => {
-				toast.success("Scrap request submitted!");
-				form.reset(); // reset form on success
-			},
-			onError: () => {
-				toast.error("Failed to submit scrap request");
-				// console.error("Scrap quote error:", error);
-			},
-		});
 	};
 
 	return (
@@ -514,9 +522,9 @@ export default function ScrapForm() {
 					type="submit"
 					variant="default"
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
-					disabled={isPending}
+					disabled={isLoading}
 				>
-					{isPending ? "Submitting..." : "Submit"}
+					{isLoading ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>

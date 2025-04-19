@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCourierRequestMutation } from "@marketing/courier/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import {
@@ -35,6 +34,7 @@ import { useForm } from "react-hook-form";
 
 import { Calendar } from "@ui/components/calendar";
 import { ScrollArea } from "@ui/components/scroll-area";
+import axios from "axios";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -71,6 +71,8 @@ export default function CourierForm() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [time, setTime] = useState<string>("05:00");
 	const [date, setDate] = useState<Date | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+
 	const form = useForm<CourierFormValues>({
 		resolver: zodResolver(courierSchema),
 		defaultValues: {
@@ -85,22 +87,32 @@ export default function CourierForm() {
 		},
 	});
 
-	const { mutate, isPending } = useCourierRequestMutation();
+	const postCourierRequest = async (data: CourierFormValues) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/courier`,
+				data,
+			);
+			if (response.status === 200) {
+				toast.success("Courier quote submitted!");
+				form.reset(); // reset form on success
+			} else {
+				toast.error("Failed to submit courier quote");
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			toast.error("Failed to submit courier quote");
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const onSubmit = (data: CourierFormValues) => {
 		console.log(data);
 		console.log(JSON.stringify(data, null, 2));
 
-		mutate(data, {
-			onSuccess: () => {
-				toast.success("Courier request submitted!");
-				form.reset(); // reset form on success
-			},
-			onError: () => {
-				toast.error("Failed to submit courier request");
-				// console.error("Courier quote error:", error);
-			},
-		});
+		postCourierRequest(data);
 	};
 
 	return (
@@ -412,9 +424,9 @@ export default function CourierForm() {
 					type="submit"
 					variant="default"
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
-					disabled={isPending}
+					disabled={isLoading}
 				>
-					{isPending ? "Submitting..." : "Submit"}
+					{isLoading ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>

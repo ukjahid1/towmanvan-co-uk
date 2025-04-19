@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useHandymanRequestMutation } from "@marketing/handyman/lib/api";
 import { LocationPickerDialog } from "@marketing/shared/components/LocationPickerDialog";
 import { Button } from "@ui/components/button";
 import { Calendar } from "@ui/components/calendar";
@@ -37,6 +36,7 @@ import { Textarea } from "@ui/components/textarea";
 
 import { useForm } from "react-hook-form";
 
+import axios from "axios";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -78,7 +78,7 @@ export default function HandymanForm() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [time, setTime] = useState<string>("05:00");
 	const [date, setDate] = useState<Date | null>(null);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const form = useForm<HandymanFormValues>({
 		resolver: zodResolver(handymanSchema),
 		defaultValues: {
@@ -91,22 +91,30 @@ export default function HandymanForm() {
 		},
 	});
 
-	const { mutate, isPending } = useHandymanRequestMutation();
+	const postHandymanRequest = async (data: HandymanFormValues) => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				`${process.env.NEXT_PUBLIC_API_URL}/quote`,
+				data,
+			);
+			if (response.status === 200) {
+				toast.success("Recovery quote submitted!");
+				form.reset(); // reset form on success
+			} else {
+				toast.error("Failed to submit recovery quote");
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			toast.error("Failed to submit recovery quote");
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const onSubmit = (data: HandymanFormValues) => {
 		console.log(data);
 		console.log(JSON.stringify(data, null, 2));
-
-		mutate(data, {
-			onSuccess: () => {
-				toast.success("Handyman request submitted!");
-				form.reset(); // reset form on success
-			},
-			onError: () => {
-				toast.error("Failed to submit handyman request");
-				// console.error("Handyman quote error:", error);
-			},
-		});
 	};
 
 	return (
@@ -426,9 +434,9 @@ export default function HandymanForm() {
 					type="submit"
 					variant="default"
 					className="w-full h-auto bg-fd-primary text-fd-primary-foreground rounded-xl py-3 text-center hover:bg-fd-primary/90 focus:ring-2 focus:ring-fd-primary/50 focus:outline-none"
-					disabled={isPending}
+					disabled={isLoading}
 				>
-					{isPending ? "Submitting..." : "Submit"}
+					{isLoading ? "Submitting..." : "Submit"}
 				</Button>
 			</form>
 		</Form>
