@@ -1,4 +1,3 @@
-import { LocaleLink } from "@i18n/routing";
 import Image from "next/image";
 import React from "react";
 export const Services = () => {
@@ -8,7 +7,7 @@ export const Services = () => {
 			title: "Car Recovery Services",
 			description:
 				"Stuck on the road? Our trusted car recovery service is here 24/7 to get you moving again. Fast, reliable, and stress-free assistance when you need it most",
-			link: "/services/car-recovery",
+			link: "/#car-recovery",
 			imageUrl: "/images/car-recovery.png",
 		},
 		{
@@ -16,7 +15,7 @@ export const Services = () => {
 			title: "Man and Van Services",
 			description:
 				"Affordable and reliable Man and Van services for all your moving needs—local or long-distance, big or small. Let us handle the heavy lifting while you relax.",
-			link: "/services/man-and-van",
+			link: "/#man-and-van",
 			imageUrl: "/images/man-and-van.png",
 		},
 		{
@@ -24,15 +23,15 @@ export const Services = () => {
 			title: "Courier Services",
 			description:
 				"Fast and dependable courier services for all your delivery needs. From documents to parcels, we ensure safe and timely delivery every time.",
-			link: "/services/courier",
+			link: "/#courier",
 			imageUrl: "/images/courier.png",
 		},
 		{
-			slug: "scrap-my-car",
+			slug: "scrap-and-sell",
 			title: "Scrap My Car Services",
 			description:
 				"Hassle-free car scrapping services with instant quotes, free collection, and top cash offers. We make it easy to recycle your old vehicle responsibly.",
-			link: "/services/scrap-my-car",
+			link: "/#scrap-and-sell",
 			imageUrl: "/images/scrap.png",
 		},
 		{
@@ -40,7 +39,7 @@ export const Services = () => {
 			title: "Driving Lesson Services",
 			description:
 				"Learn to drive with confidence! Professional, patient, and friendly instructors offering tailored driving lessons to suit all levels—from beginners to advanced.",
-			link: "/services/driving-lessons",
+			link: "/#driving-lessons",
 			imageUrl: "/images/driving-lessons.png",
 		},
 		{
@@ -48,12 +47,15 @@ export const Services = () => {
 			title: "Handyman Services",
 			description:
 				"Your go-to solution for all home repairs and maintenance. From small fixes to major renovations, our skilled handymen provide reliable and affordable services you can trust.",
-			link: "/services/handyman",
+			link: "/#handyman",
 			imageUrl: "/images/handyman.png",
 		},
 	];
 	return (
-		<section className="w-full scroll-my-20 pt-12 pb-4 lg:pt-16 bg-background">
+		<section
+			id="services"
+			className="w-full scroll-my-16 pt-12 pb-4 lg:pt-16 bg-background"
+		>
 			<div className="container max-w-7xl px-2 mx-auto">
 				<h4 className="text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
 					Services
@@ -88,11 +90,11 @@ export const Services = () => {
 									{service.description}
 								</p>
 							</div>
-							<LocaleLink href={service.link}>
+							<a href={service.link}>
 								<div className="py-2 px-4 hover:bg-primary hover:text-primary-foreground duration-200 my-2 w-min text-nowrap rounded-full bg-background">
 									Get Quote
 								</div>
-							</LocaleLink>
+							</a>
 						</div>
 					))}
 				</div>

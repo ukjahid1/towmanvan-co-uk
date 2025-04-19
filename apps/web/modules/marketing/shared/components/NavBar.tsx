@@ -69,7 +69,7 @@ export function NavBar() {
 		},
 		{
 			label: t("common.menu.services"),
-			href: "/services",
+			href: "/#services",
 		},
 		{
 			label: t("common.menu.agent"),

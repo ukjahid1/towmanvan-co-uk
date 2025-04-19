@@ -1,14 +1,11 @@
+import { CourierSection } from "@marketing/home/components/CourierSection";
+import { DrivingSection } from "@marketing/home/components/DrivingSection";
 import { FaqSection } from "@marketing/home/components/FaqSection";
-import { Features } from "@marketing/home/components/Features";
-import { Services } from "@marketing/home/components/Services";
+import { HandymanSection } from "@marketing/home/components/HandymanSection";
 import { Hero } from "@marketing/home/components/Hero";
 import { RemovalSection } from "@marketing/home/components/RemovalSection";
 import { ScrapAndSellSection } from "@marketing/home/components/ScrapAndSellSection";
-import { HandymanSection } from "@marketing/home/components/HandymanSection";
-import { CourierSection } from "@marketing/home/components/CourierSection";
-import { DrivingSection } from "@marketing/home/components/DrivingSection";
-// import { Newsletter } from "@marketing/home/components/Newsletter";
-import { PricingSection } from "@marketing/home/components/PricingSection";
+import { Services } from "@marketing/home/components/Services";
 import { setRequestLocale } from "next-intl/server";
 
 export default async function Home({
@@ -28,8 +25,8 @@ export default async function Home({
 			<HandymanSection />
 			<RemovalSection />
 			<DrivingSection />
-			<Features />
-			<PricingSection />
+			{/* <Features />
+			<PricingSection /> */}
 			<FaqSection />
 			{/* <Newsletter /> */}
 		</>

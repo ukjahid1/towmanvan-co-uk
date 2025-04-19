@@ -4,7 +4,7 @@ import { Logo } from "@shared/components/Logo";
 export function Footer() {
 	return (
 		<footer className="border-t py-8 text-foreground/60 text-sm">
-			<div className="container grid grid-cols-1 gap-6 lg:grid-cols-3">
+			<div className="container mx-auto max-w-7xl grid grid-cols-1 gap-6 lg:grid-cols-3">
 				<div>
 					<Logo className="opacity-70 grayscale" />
 					<p className="mt-3 text-sm opacity-70">
@@ -14,9 +14,9 @@ export function Footer() {
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<LocaleLink href="/services" className="block">
+					<a href="/#services" className="block">
 						Services
-					</LocaleLink>
+					</a>
 
 					<LocaleLink href="/blog" className="block">
 						Blog
