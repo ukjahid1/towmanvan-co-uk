@@ -54,7 +54,7 @@ export const Services = () => {
 	];
 	return (
 		<section className="w-full scroll-my-20 pt-12 pb-4 lg:pt-16 bg-background">
-			<div className="container max-w-6xl mx-auto">
+			<div className="container max-w-6xl px-2 mx-auto">
 				<h4 className="text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
 					Services
 				</h4>
@@ -71,7 +71,7 @@ export const Services = () => {
 					{services.map((service) => (
 						<div
 							key={service.title}
-							className="col-span-12 md:col-span-6 lg:col-span-4 p-4  bg-custom-card rounded-3xl shadow-md m-4 flex flex-col justify-between"
+							className="col-span-12 md:col-span-6 lg:col-span-4 p-4  bg-custom-card rounded-3xl shadow-md m-3 flex flex-col justify-between"
 						>
 							<div>
 								<Image

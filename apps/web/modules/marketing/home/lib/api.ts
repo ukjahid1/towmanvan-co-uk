@@ -39,3 +39,22 @@ export const useContactFormMutation = () => {
 		},
 	});
 };
+
+export const recoveryFormMutationKey = ["recovery-form"] as const;
+
+export const useRecoveryFormMutation = () => {
+	return useMutation({
+		mutationKey: recoveryFormMutationKey,
+		mutationFn: async (
+			data: InferRequestType<typeof apiClient.quote.$post>["json"],
+		) => {
+			const response = await apiClient.quote.$post({ json: data });
+
+			if (!response.ok) {
+				throw new Error("Failed to submit recovery quote");
+			}
+
+			return await response.json(); // return data if needed
+		},
+	});
+};

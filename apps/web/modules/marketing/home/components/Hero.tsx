@@ -1,16 +1,17 @@
 import { LocaleLink } from "@i18n/routing";
-import { Button } from "@ui/components/button";
-import { ArrowRightIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import heroImageDark from "../../../../public/images/hero-image-dark.png";
-import heroImage from "../../../../public/images/hero-image.png";
+import RecoveryForm from "@marketing/home/components/RecoveryForm";
+// import { Button } from "@ui/components/button";
+import { ArrowUpRight } from "lucide-react";
+// import Image from "next/image";
+// import Link from "next/link";
+// import heroImageDark from "../../../../public/images/hero-image-dark.png";
+// import heroImage from "../../../../public/images/hero-image.png";
 
 export function Hero() {
 	return (
 		<div className="relative max-w-full overflow-x-hidden bg-linear-to-b from-0% from-card to-[50vh] to-background">
 			<div className="absolute left-1/2 z-10 ml-[-500px] h-[500px] w-[1000px] rounded-full bg-linear-to-r from-primary to-bg opacity-20 blur-[150px]" />
-			<div className="container relative z-20 pt-44 pb-12 text-center lg:pb-16">
+			{/* <div className="container relative z-20 pt-44 pb-12 text-center lg:pb-16">
 				<div className="mb-4 flex justify-center">
 					<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 bg-card p-px px-4 py-1 font-normal text-highlight text-sm shadow-sm">
 						<span className="flex items-center gap-2 rounded-full font-semibold text-highlight">
@@ -171,6 +172,37 @@ export function Hero() {
 						className="hidden rounded-xl dark:block"
 						priority
 					/>
+				</div>
+			</div> */}
+			<div className="w-full bg-background/50 pt-36 pb-12 max-w-6xl mx-auto">
+				<div className="w-full grid grid-cols-12 gap-4">
+					<div className="col-span-12 md:col-span-5 lg:col-span-4 bg-hero-bg bg-cover lg:rounded-xl my-auto">
+						{/* <InstantQuoteForm isLabelHidden={true} /> */}
+						<RecoveryForm />
+					</div>
+					<div className="col-span-12 md:col-span-7 lg:col-span-8 space-y-8 m-2 lg:m-8 flex flex-col ">
+						<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl xl:text-7xl ">
+							Quick Car Recovery Anytime Anywhere!
+						</h1>
+						<div className="p-8 rounded-2xl bg-primary/75 space-y-4">
+							<p className="text-primary-foreground">
+								Always here with fast, reliable car recovery to
+								get you safely back on the road—24/7, wherever
+								you are.
+							</p>
+							<LocaleLink
+								href={"/services"}
+								className="rounded-full p-2 flex items-center justify-center w-min bg-background"
+							>
+								<p className="text-nowrap mx-2">
+									Other Services
+								</p>
+								<div className="rounded-full bg-primary text-primary-foreground p-2 hover:rotate-45 duration-200">
+									<ArrowUpRight />
+								</div>
+							</LocaleLink>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
