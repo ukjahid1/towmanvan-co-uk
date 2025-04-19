@@ -1,4 +1,3 @@
-import { LocaleLink } from "@i18n/routing";
 import RecoveryForm from "@marketing/home/components/RecoveryForm";
 // import { Button } from "@ui/components/button";
 import { ArrowUpRight } from "lucide-react";
@@ -192,8 +191,8 @@ export function Hero() {
 								get you safely back on the road—24/7, wherever
 								you are.
 							</p>
-							<LocaleLink
-								href={"/services"}
+							<a
+								href={"/#services"}
 								className="rounded-full p-2 flex items-center justify-center w-min bg-background"
 							>
 								<p className="text-nowrap mx-2">
@@ -202,7 +201,7 @@ export function Hero() {
 								<div className="rounded-full bg-primary text-primary-foreground p-2 hover:rotate-45 duration-200">
 									<ArrowUpRight />
 								</div>
-							</LocaleLink>
+							</a>
 						</div>
 					</div>
 				</div>

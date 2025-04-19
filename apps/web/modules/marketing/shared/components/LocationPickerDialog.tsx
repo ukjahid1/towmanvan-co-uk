@@ -59,11 +59,9 @@ export const LocationPickerDialog = ({ label, value, onChange }: Props) => {
 			</DialogTrigger>
 			<DialogContent className="max-w-3xl">
 				<DialogHeader>
-					<DialogTitle>Are you absolutely sure?</DialogTitle>
+					<DialogTitle>Pick a location</DialogTitle>
 					<DialogDescription>
-						This action cannot be undone. This will permanently
-						delete your account and remove your data from our
-						servers.
+						Please click on the map to point to a location.
 					</DialogDescription>
 				</DialogHeader>
 

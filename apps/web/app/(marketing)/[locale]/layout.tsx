@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { PropsWithChildren } from "react";
+import "leaflet/dist/leaflet.css";
 
 const locales = Object.keys(config.i18n.locales);
 
