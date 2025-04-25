@@ -23,8 +23,8 @@ export default async function Home({
 			<RemovalSection />
 			<CourierSection />
 			<ScrapAndSellSection />
-			<HandymanSection />
 			<DrivingSection />
+			<HandymanSection />
 			{/* <Features />
 			<PricingSection /> */}
 			<FaqSection />

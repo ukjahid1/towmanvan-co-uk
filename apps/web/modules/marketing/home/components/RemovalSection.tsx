@@ -4,7 +4,7 @@ import React from "react";
 export const RemovalSection = () => {
 	return (
 		<section id="man-and-van" className="my-16 w-full scroll-my-20">
-			<div className="container mx-auto bg-primary/10 p-4 rounded-3xl grid grid-cols-12 max-w-7xl">
+			<div className="container mx-auto bg-primary/10 p-8 rounded-3xl grid grid-cols-12 max-w-7xl">
 				<div className="col-span-12 md:col-span-7 lg:col-span-8 m-4 flex flex-col items-start justify-start">
 					<div className="flex flex-col items-start justify-start gap-4 my-12 max-w-2xl">
 						<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2">

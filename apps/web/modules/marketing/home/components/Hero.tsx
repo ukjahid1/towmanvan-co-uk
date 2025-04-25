@@ -185,8 +185,8 @@ export function Hero() {
 						<h1 className="scroll-m-20 text-4xl lg:leading-24 font-helvetica tracking-tight md:text-5xl lg:text-6xl xl:text-7xl lg:mb-24">
 							Quick Car Recovery Anytime Anywhere!
 						</h1>
-						<div className="p-8 rounded-2xl bg-primary/75 space-y-4 max-w-2xl">
-							<p className="text-primary-foreground">
+						<div className="p-8 rounded-2xl bg-primary/75 dark:bg-primary/40 space-y-4 max-w-2xl">
+							<p className="text-primary-foreground text-lg">
 								Always here with fast, reliable car recovery to
 								get you safely back on the road—24/7, wherever
 								you are.
