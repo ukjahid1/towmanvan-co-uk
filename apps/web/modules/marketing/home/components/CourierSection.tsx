@@ -6,21 +6,22 @@ export const CourierSection = () => {
 	return (
 		<section id="courier" className="my-16 w-full scroll-my-20">
 			<div className="container mx-auto bg-primary/10 p-4 rounded-3xl grid grid-cols-12 max-w-7xl">
-				<div className="col-span-12 md:col-span-7 lg:col-span-8 m-4 flex flex-col items-start justify-between">
-					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
-						Cuorier Service
-					</h4>
-					<div>
-						<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl my-2">
-							Need something to send?{" "}
-							<span className="text-blue-500">We got you!</span>
-						</h1>
-						<p className="text-muted-foreground max-w-xl">
-							Whether it's a simple repair or a complex project,
-							our cuorier Service is here to help. We connect you
-							with qualified professionals who can handle any task
-							with ease.
-						</p>
+				<div className="col-span-12 md:col-span-7 lg:col-span-8 m-4 flex flex-col items-start justify-start">
+					<div className="flex flex-col items-start justify-start gap-4 my-12 max-w-2xl">
+						<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2">
+							Cuorier Service
+						</h4>
+						<div>
+							<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
+								Need something to send? We got you!
+							</h1>
+							<p className="text-muted-foreground max-w-2xl">
+								Whether it's a simple repair or a complex
+								project, our cuorier Service is here to help. We
+								connect you with qualified professionals who can
+								handle any task with ease.
+							</p>
+						</div>
 					</div>
 					<div className="my-4">
 						<div className="flex items-start justify-start my-4">
