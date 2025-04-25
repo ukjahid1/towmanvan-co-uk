@@ -61,10 +61,10 @@ export const Services = () => {
 					Services
 				</h4>
 				<div className="flex flex-col lg:flex-row items-start justify-between px-2">
-					<h2 className="pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+					<h2 className="pb-2 text-3xl font-semibold tracking-tight first:mt-0 max-w-md">
 						24/7 Assistance to Get You Back on the Road
 					</h2>
-					<p className="text-muted-foreground max-w-lg">
+					<p className="text-muted-foreground max-w-sm">
 						Our expert team is ready to reach your location quickly
 						to help get you back on the road or to a safe location.
 					</p>
