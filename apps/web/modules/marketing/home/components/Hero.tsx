@@ -176,16 +176,16 @@ export function Hero() {
 				</div>
 			</div> */}
 			<div className="w-full bg-background/50 pt-36 pb-12 max-w-7xl mx-auto">
-				<div className="w-full grid grid-cols-12 gap-4">
-					<div className="col-span-12 md:col-span-5 lg:col-span-4 bg-hero-bg bg-cover lg:rounded-xl my-auto">
+				<div className="w-full grid grid-cols-12 gap-8">
+					<div className="col-span-12 md:col-span-5 pl-4 lg:col-span-4 bg-hero-bg bg-cover lg:rounded-xl my-auto">
 						{/* <InstantQuoteForm isLabelHidden={true} /> */}
 						<RecoveryForm />
 					</div>
-					<div className="col-span-12 md:col-span-7 lg:col-span-8 space-y-8 m-2 lg:m-8 flex flex-col ">
-						<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl xl:text-7xl ">
+					<div className="col-span-12 md:col-span-7 lg:col-span-8 space-y-8 m-2 lg:m-8 flex flex-col">
+						<h1 className="scroll-m-20 text-4xl lg:leading-24 font-helvetica tracking-tight md:text-5xl lg:text-6xl xl:text-7xl lg:mb-24">
 							Quick Car Recovery Anytime Anywhere!
 						</h1>
-						<div className="p-8 rounded-2xl bg-primary/75 space-y-4">
+						<div className="p-8 rounded-2xl bg-primary/75 space-y-4 max-w-2xl">
 							<p className="text-primary-foreground">
 								Always here with fast, reliable car recovery to
 								get you safely back on the road—24/7, wherever
