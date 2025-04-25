@@ -6,7 +6,7 @@ export const ScrapAndSellSection = () => {
 		<section id="scrap-and-sell" className="my-16 w-full scroll-my-20">
 			<div className="container mx-auto bg-primary/10 p-4 rounded-3xl grid grid-cols-12 max-w-7xl">
 				<div className="col-span-12 m-4 flex flex-col items-start justify-between">
-					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
+					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2">
 						Scrap or Sell
 					</h4>
 					<div>
