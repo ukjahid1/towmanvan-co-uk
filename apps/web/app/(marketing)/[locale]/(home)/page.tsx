@@ -20,10 +20,10 @@ export default async function Home({
 		<>
 			<Hero />
 			<Services />
+			<RemovalSection />
 			<CourierSection />
 			<ScrapAndSellSection />
 			<HandymanSection />
-			<RemovalSection />
 			<DrivingSection />
 			{/* <Features />
 			<PricingSection /> */}

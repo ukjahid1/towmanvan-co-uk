@@ -5,24 +5,25 @@ export const RemovalSection = () => {
 	return (
 		<section id="man-and-van" className="my-16 w-full scroll-my-20">
 			<div className="container mx-auto bg-primary/10 p-4 rounded-3xl grid grid-cols-12 max-w-7xl">
-				<div className="col-span-12 md:col-span-7 lg:col-span-8 m-4 flex flex-col items-start justify-between">
-					<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2 px-2">
-						Man & Van / Removal Service
-					</h4>
-					<div>
-						<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl my-2">
-							Need help from a removal?{" "}
-							<span className="text-blue-500">We got you!</span>
-						</h1>
-						<p className="text-muted-foreground max-w-xl">
-							Whether it's a simple repair or a complex project,
-							our removal service is here to help. We connect you
-							with qualified professionals who can handle any task
-							with ease.
-						</p>
+				<div className="col-span-12 md:col-span-7 lg:col-span-8 m-4 flex flex-col items-start justify-start">
+					<div className="flex flex-col items-start justify-start gap-4 my-12 max-w-2xl">
+						<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-blue-500 mb-2">
+							Man & Van Service
+						</h4>
+						<div>
+							<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
+								Need something to send? We got you!
+							</h1>
+							<p className="text-muted-foreground max-w-2xl">
+								Whether it's a simple repair or a complex
+								project, our man & Van Service is here to help.
+								We connect you with qualified professionals who
+								can handle any task with ease.
+							</p>
+						</div>
 					</div>
-					<div className="my-4">
-						<div className="flex items-start justify-start my-4">
+					<div>
+						<div className="flex items-start justify-start my-2">
 							<div className="h-16 w-16 bg-primary/15 rounded-full grid place-content-center m-2">
 								<p className="text-xl">01</p>
 							</div>
