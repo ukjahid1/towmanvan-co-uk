@@ -40,8 +40,8 @@
 		"cropperjs": "2.0.0",
 		"date-fns": "^4.1.0",
 		"deepmerge": "^4.3.1",
-		"fumadocs-core": "^15.4.1",
-		"fumadocs-ui": "^15.4.1",
+		"fumadocs-core": "^15.4.2",
+		"fumadocs-ui": "^15.4.2",
 		"hono": "^4.7.10",
 		"jotai": "2.12.5",
 		"js-cookie": "^3.0.5",
@@ -71,7 +71,7 @@
 		"ufo": "^1.6.1",
 		"usehooks-ts": "^3.1.1",
 		"uuid": "^11.1.0",
-		"zod": "^3.25.30"
+		"zod": "^3.25.32"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
