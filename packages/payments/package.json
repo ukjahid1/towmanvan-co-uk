@@ -6,7 +6,7 @@
 		"@repo/database": "workspace:*",
 		"@repo/logs": "workspace:*",
 		"chargebee-typescript": "^2.48.0",
-		"stripe": "^18.1.1",
+		"stripe": "^18.2.0",
 		"ufo": "^1.6.1"
 	},
 	"devDependencies": {
